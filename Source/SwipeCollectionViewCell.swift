@@ -14,14 +14,14 @@ import UIKit
  
  The default behavior closely matches the stock Mail.app. If you want to customize the transition style (ie. how the action buttons are exposed), or the expansion style (the behavior when the row is swiped passes a defined threshold), you can return the appropriately configured `SwipeOptions` via the `SwipeCollectionViewCellDelegate` delegate.
  */
-open class SwipeCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
+open class SwipeCollectionViewCell: UICollectionViewCell, SwipeCell, UIGestureRecognizerDelegate {
+    
     /// The object that acts as the delegate of the `SwipeCollectionViewCell`.
     public weak var delegate: SwipeCollectionViewCellDelegate?
     
     var animator: SwipeAnimator?
     
     var state = SwipeState.center
-    var orientation: SwipeActionsOrientation?
     var originalCenter: CGFloat = 0
     
     weak var collectionView: UICollectionView?
@@ -134,7 +134,7 @@ open class SwipeCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDel
         
         switch gesture.state {
         case .began:
-            if let cell = collectionView?.swipeCells.first(where: { $0.state.isActive }), cell.contentView != target {
+            if let cell = collectionView?.swipeCells.first(where: { $0.state.isActive }) as? SwipeCollectionViewCell, cell.contentView != target {
                 return
             }
             
@@ -149,11 +149,11 @@ open class SwipeCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDel
                 let orientation: SwipeActionsOrientation = velocity.x > 0 ? .left : .right
                 
                 showActionsView(for: orientation)
-                self.orientation = orientation
             }
             
         case .changed:
             guard let actionsView = actionsView else { return }
+            guard state.isActive else { return }
             
             let translation = gesture.translation(in: target).x
             scrollRatio = 1.0
@@ -242,7 +242,6 @@ open class SwipeCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDel
         selectedIndexPaths?.forEach { collectionView.deselectItem(at: $0, animated: false) }
         
         configureActionsView(with: actions, for: orientation)
-        self.orientation = orientation
         
         return true
     }
@@ -359,6 +358,7 @@ open class SwipeCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDel
         
         if !UIAccessibilityIsVoiceOverRunning() {
             for cell in collectionView?.swipeCells ?? [] {
+                guard let cell = cell as? SwipeCollectionViewCell else { continue }
                 if (cell.state == .left || cell.state == .right) && !cell.contains(point: point) {
                     collectionView?.hideSwipeCell()
                     return false

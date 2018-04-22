@@ -7,19 +7,21 @@
 
 import UIKit
 
-extension UITableView {
-    var swipeCells: [SwipeTableViewCell] {
-        return visibleCells.compactMap({ $0 as? SwipeTableViewCell })
+extension UIScrollView {
+    
+    var allVisibleCells: [UIView] {
+        switch self {
+        case let tableView as UITableView:
+            return tableView.visibleCells;
+        case let collectionView as UICollectionView:
+            return collectionView.visibleCells;
+        default:
+            return []
+        }
     }
     
-    func hideSwipeCell() {
-        swipeCells.forEach { $0.hideSwipe(animated: true) }
-    }
-}
-
-extension UICollectionView {
-    var swipeCells: [SwipeCollectionViewCell] {
-        return visibleCells as? [SwipeCollectionViewCell] ?? []
+    var swipeCells: [SwipeCell] {
+        return allVisibleCells.compactMap({ $0 as? SwipeCell })
     }
     
     func hideSwipeCell() {

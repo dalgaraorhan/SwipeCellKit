@@ -13,7 +13,8 @@ import UIKit
  
  The default behavior closely matches the stock Mail.app. If you want to customize the transition style (ie. how the action buttons are exposed), or the expansion style (the behavior when the row is swiped passes a defined threshold), you can return the appropriately configured `SwipeOptions` via the `SwipeTableViewCellDelegate` delegate.
  */
-open class SwipeTableViewCell: UITableViewCell {
+open class SwipeTableViewCell: UITableViewCell, SwipeCell {
+    
     /// The object that acts as the delegate of the `SwipeTableViewCell`.
     public weak var delegate: SwipeTableViewCellDelegate?
     
@@ -124,7 +125,7 @@ open class SwipeTableViewCell: UITableViewCell {
         
         switch gesture.state {
         case .began:
-            if let cell = tableView?.swipeCells.first(where: { $0.state.isActive }), cell != target {
+            if let cell = tableView?.swipeCells.first(where: { $0.state.isActive }) as? UIView, cell != target {
                 return
             }
             
@@ -351,7 +352,8 @@ open class SwipeTableViewCell: UITableViewCell {
 
         if !UIAccessibilityIsVoiceOverRunning() {
             for cell in tableView?.swipeCells ?? [] {
-                if (cell.state == .left || cell.state == .right) && !cell.contains(point: point) {
+                guard let cell = cell as? SwipeCollectionViewCell else { continue }
+                if  (cell.state == .left || cell.state == .right) && !cell.contains(point: point) {
                     tableView?.hideSwipeCell()
                     return false
                 }

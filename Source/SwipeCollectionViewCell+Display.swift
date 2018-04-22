@@ -71,21 +71,18 @@ extension SwipeCollectionViewCell {
             return
         }
         
-        let targetOrientation: SwipeActionsOrientation = offset > 0 ? .left : .right
-        let targetState = SwipeState(orientation: targetOrientation)
+        let orientation: SwipeActionsOrientation = offset > 0 ? .left : .right
+        let targetState = SwipeState(orientation: orientation)
         
         if state != targetState {
-            if orientation != targetOrientation {
-                guard showActionsView(for: targetOrientation) else { return }
-                orientation = targetOrientation
-            }
+            guard showActionsView(for: orientation) else { return }
             
             collectionView?.hideSwipeCell()
             
             state = targetState
         }
         
-        let maxOffset = min(bounds.width, abs(offset)) * -targetOrientation.scale
+        let maxOffset = min(bounds.width, abs(offset)) * -orientation.scale
         let targetCenter = abs(offset) == CGFloat.greatestFiniteMagnitude ? self.targetCenter(active: true) : bounds.midX + maxOffset
         
         if animated {

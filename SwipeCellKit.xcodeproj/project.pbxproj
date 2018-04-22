@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11BAD912208C0B98009E35C9 /* SwipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BAD911208C0B98009E35C9 /* SwipeCell.swift */; };
 		170BCE721E8340C000F46E18 /* SwipeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170BCE711E8340C000F46E18 /* SwipeAnimator.swift */; };
 		3F19AD041E8D711C006B4B3A /* SwipeFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F19AD031E8D711C006B4B3A /* SwipeFeedback.swift */; };
 		3F234AC81E44A7A400E22A38 /* SwipeCellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F234AC61E44A7A400E22A38 /* SwipeCellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11BAD911208C0B98009E35C9 /* SwipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCell.swift; sourceTree = "<group>"; };
 		170BCE711E8340C000F46E18 /* SwipeAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeAnimator.swift; sourceTree = "<group>"; };
 		3F19AD031E8D711C006B4B3A /* SwipeFeedback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeFeedback.swift; sourceTree = "<group>"; };
 		3F234AC31E44A7A400E22A38 /* SwipeCellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwipeCellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				3F4C721E1E7E8C180097399A /* Swipeable.swift */,
+				11BAD911208C0B98009E35C9 /* SwipeCell.swift */,
 				170BCE711E8340C000F46E18 /* SwipeAnimator.swift */,
 				B93ECA981EDEE93D00AE05AD /* SwipeAccessibilityCustomAction.swift */,
 				3F234AD21E44A94F00E22A38 /* SwipeTableViewCell.swift */,
@@ -202,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11BAD912208C0B98009E35C9 /* SwipeCell.swift in Sources */,
 				3F234AD81E44A94F00E22A38 /* SwipeActionsView.swift in Sources */,
 				3F234AD71E44A94F00E22A38 /* SwipeAction.swift in Sources */,
 				3F3ED7101E486993009DD5D8 /* SwipeActionButton.swift in Sources */,
@@ -344,7 +348,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;

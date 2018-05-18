@@ -15,7 +15,7 @@ import UIKit
  */
 open class SwipeTableViewCell: UITableViewCell {
     /// The object that acts as the delegate of the `SwipeTableViewCell`.
-    public weak var delegate: SwipeTableViewCellDelegate?
+    public weak var swipeTableViewCellDelegate: SwipeTableViewCellDelegate?
     
     var animator: SwipeAnimator?
 
@@ -219,7 +219,7 @@ open class SwipeTableViewCell: UITableViewCell {
     func showActionsView(for orientation: SwipeActionsOrientation) -> Bool {
         guard let tableView = tableView,
             let indexPath = tableView.indexPath(for: self),
-            let actions = delegate?.tableView(tableView, editActionsForRowAt: indexPath, for: orientation),
+            let actions = swipeTableViewCellDelegate?.tableView(tableView, editActionsForRowAt: indexPath, for: orientation),
             actions.count > 0
             else {
                 return false
@@ -241,7 +241,7 @@ open class SwipeTableViewCell: UITableViewCell {
         guard let tableView = tableView,
             let indexPath = tableView.indexPath(for: self) else { return }
         
-        let options = delegate?.tableView(tableView, editActionsOptionsForRowAt: indexPath, for: orientation) ?? SwipeTableOptions()
+        let options = swipeTableViewCellDelegate?.tableView(tableView, editActionsOptionsForRowAt: indexPath, for: orientation) ?? SwipeTableOptions()
         
         self.clipsToBounds = false
         
@@ -249,7 +249,7 @@ open class SwipeTableViewCell: UITableViewCell {
         self.actionsView = nil
         
         var contentEdgeInsets = UIEdgeInsets.zero
-        if let visibleTableViewRect = delegate?.visibleRect(for: tableView) {
+        if let visibleTableViewRect = swipeTableViewCellDelegate?.visibleRect(for: tableView) {
             let visibleCellRect = frame.intersection(visibleTableViewRect)
             if visibleCellRect.isNull == false {
                 let top = visibleCellRect.minY > frame.minY ? max(0, visibleCellRect.minY - frame.minY) : 0
@@ -292,9 +292,9 @@ open class SwipeTableViewCell: UITableViewCell {
             let indexPath = tableView.indexPath(for: self) else { return }
 
         if active {
-            delegate?.tableView(tableView, willBeginEditingRowAt: indexPath, for: actionsView.orientation)
+            swipeTableViewCellDelegate?.tableView(tableView, willBeginEditingRowAt: indexPath, for: actionsView.orientation)
         } else {
-            delegate?.tableView(tableView, didEndEditingRowAt: indexPath, for: actionsView.orientation)
+            swipeTableViewCellDelegate?.tableView(tableView, didEndEditingRowAt: indexPath, for: actionsView.orientation)
         }
     }
     
@@ -475,7 +475,7 @@ extension SwipeTableViewCell: SwipeActionsViewDelegate {
         action.completionHandler = { [weak self] style in
             action.completionHandler = nil
 
-            self?.delegate?.tableView(tableView, didEndEditingRowAt: indexPath, for: actionsView.orientation)
+            self?.swipeTableViewCellDelegate?.tableView(tableView, didEndEditingRowAt: indexPath, for: actionsView.orientation)
             
             switch style {
             case .delete:

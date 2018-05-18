@@ -41,7 +41,7 @@ class MailViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MailCell") as! MailCell
-        cell.delegate = self
+        cell.swipeTableViewCellDelegate = self
         cell.selectedBackgroundView = createSelectedBackgroundView()
         
         let email = emails[indexPath.row]

@@ -44,8 +44,8 @@ extension SwipeTableViewCell {
                 return super.accessibilityCustomActions
             }
             
-            let leftActions = delegate?.tableView(tableView, editActionsForRowAt: indexPath, for: .left) ?? []
-            let rightActions = delegate?.tableView(tableView, editActionsForRowAt: indexPath, for: .right) ?? []
+            let leftActions = swipeTableViewCellDelegate?.tableView(tableView, editActionsForRowAt: indexPath, for: .left) ?? []
+            let rightActions = swipeTableViewCellDelegate?.tableView(tableView, editActionsForRowAt: indexPath, for: .right) ?? []
             
             let actions = [rightActions.first, leftActions.first].compactMap({ $0 }) + rightActions.dropFirst() + leftActions.dropFirst()
             
